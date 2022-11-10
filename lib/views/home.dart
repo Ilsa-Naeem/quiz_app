@@ -50,53 +50,52 @@ class _HomeState extends State<Home> {
     return Container(
         child: Column(
             children: [
+                       Expanded(child: StreamBuilder<QuerySnapshot>(
+                           stream: quizStream,
+                           builder: (BuildContext context,
+                               AsyncSnapshot<QuerySnapshot> snapshot) {
+                             if (snapshot.hasError) {
+                               Scaffold.of(context).showSnackBar(new SnackBar(
+                                 content: new Text("Error"),
+                               ));
+                             }
+                             if (snapshot.connectionState == ConnectionState.waiting) {
+                               return const Center(
+                                 child: CircularProgressIndicator(),
 
 
-                        StreamBuilder<QuerySnapshot>(
-                        stream: quizStream,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            Scaffold.of(context).showSnackBar(new SnackBar(
-                              content: new Text("Error"),
-                            ));
-                          }
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                               );
+                             }
 
 
-                            );
-                          }
-
-
-                          final List storedocs = snapshot.data!.docs;
-                          // snapshot.data!.docs.map((DocumentSnapshot document) {
-                          //   Map<String,String> a = document.data() as Map<String, String>;
-                          //   storedocs.add(a);
-                          //   a['id'] = document.id;
-                          // }).toList();
+                             final List storedocs = snapshot.data!.docs;
+                             // snapshot.data!.docs.map((DocumentSnapshot document) {
+                             //   Map<String,String> a = document.data() as Map<String, String>;
+                             //   storedocs.add(a);
+                             //   a['id'] = document.id;
+                             // }).toList();
 
 
 
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: storedocs.length,
-                              itemBuilder: (context, index) {
-                                return QuizTile(
-                                  noOfQuestions: storedocs.length,
-                                  description:
-                                  storedocs[index]['quizDesc'],
-                                  id: storedocs[index]["quizID"],
+                             return ListView.builder(
+                                 shrinkWrap: true,
+                                 physics: ClampingScrollPhysics(),
+                                 itemCount: storedocs.length,
+                                 itemBuilder: (context, index) {
+                                   return QuizTile(
+                                     noOfQuestions: storedocs.length,
+                                     description:
+                                     storedocs[index]['quizDesc'],
+                                     id: storedocs[index]["quizID"],
 
-                                  title:
-                                  storedocs[index]['quizTitle'],
+                                     title:
+                                     storedocs[index]['quizTitle'],
 
 
-                                );
-                              });
-                        })
+                                   );
+                                 });
+                           })
+                       )
               //       ]));
               // }
 
@@ -201,84 +200,108 @@ class QuizTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: GestureDetector(
+    return  GestureDetector(
         onTap: (){
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => QuizPlay(id),
           ));
         },
-        child: Expanded(
-         flex: 5,
             child: Column(
-
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 10),
-                // Text(imageUrl),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  height: 150,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Stack(
-                      children: [
-                        // CachedNetworkImage(
-                        //   imageUrl: imageUrl,
-                        //   placeholder: (context, url) => CircularProgressIndicator(),
-                        //   errorWidget: (context, url, error) => Icon(Icons.error),
-                        // ),
-                        // Image(
-                        //   image: imageUrl != null ? NetworkImage(imageUrl) : null,
-                        //   width: 200,
-                        // ),
 
-                    // Ink.image(image: NetworkImage('"$imageUrl.trim()"'),
-                    // fit: BoxFit.cover,
-                    //   width: MediaQuery.of(context).size.width,
-                    // ),
-                    //     Image.network(
-                    //       imageUrl
-                    //       ,
-                    //       fit: BoxFit.cover,
-                    //       width: MediaQuery.of(context).size.width,
-                    //     ),
-                        Container(
-                          color: Colors.black87,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  title,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 4,),
-                                Text(
-                                  description,
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                )
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.loose,
+                  child:   SizedBox(height: 10),),
 
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
+
+               Flexible(
+                 flex:1,
+                 fit: FlexFit.loose,
+                 child:  Container(
+                   padding: EdgeInsets.symmetric(horizontal: 24),
+                   height: 150,
+                   child: ClipRRect(
+                     borderRadius: BorderRadius.circular(8),
+                     child: Stack(
+                       children: [
+                         // CachedNetworkImage(
+                         //   imageUrl: imageUrl,
+                         //   placeholder: (context, url) => CircularProgressIndicator(),
+                         //   errorWidget: (context, url, error) => Icon(Icons.error),
+                         // ),
+                         // Image(
+                         //   image: imageUrl != null ? NetworkImage(imageUrl) : null,
+                         //   width: 200,
+                         // ),
+
+                         // Ink.image(image: NetworkImage('"$imageUrl.trim()"'),
+                         // fit: BoxFit.cover,
+                         //   width: MediaQuery.of(context).size.width,
+                         // ),
+                         //     Image.network(
+                         //       imageUrl
+                         //       ,
+                         //       fit: BoxFit.cover,
+                         //       width: MediaQuery.of(context).size.width,
+                         //     ),
+                         Container(
+                           // color: Colors.black87,
+
+                           decoration: BoxDecoration(
+                               gradient: LinearGradient(
+                                 begin: Alignment.topRight,
+                                 end: Alignment.bottomLeft,
+                                 stops: [0.0,0.6,],
+                                 colors: [
+                                   Colors.orangeAccent,
+                                   Colors.black87,
+                                 ],
+                               )
+                           ),
+                           child: Center(
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text(
+                                   title,
+                                   style: TextStyle(
+                                       fontSize: 18,
+                                       color: Colors.white,
+                                       fontWeight: FontWeight.w500),
+                                 ),
+                                 SizedBox(height: 4,),
+                                 Text(
+                                   description,
+                                   style: TextStyle(
+                                       fontSize: 13,
+                                       color: Colors.white,
+                                       fontWeight: FontWeight.w500),
+                                 )
+
+                               ],
+                             ),
+                           ),
+                         )
+                       ],
+                     ),
+                   ),
+                 ),
+               // SizedBox(height: 10),
+               //   // Text(imageUrl),
+
+                 // SizedBox(height: 10),
+               ),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.loose,
+                  child:   SizedBox(height: 10),),
               ],
             ),
-          )
+
         
-      ),
+
     );
   }
 

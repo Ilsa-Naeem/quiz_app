@@ -4,12 +4,19 @@ import 'package:quiz_app/views/home.dart';
 import 'package:quiz_app/views/signin.dart';
 import 'package:quiz_app/views/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 import 'helper/constants.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
   runApp( MyApp());
 }
 
@@ -46,6 +53,7 @@ class _MyAppState extends State<MyApp>{
       debugShowCheckedModeBanner: false,
       home:
       // (isUserLoggedIn ?? false) ? Home() :
+
       SignIn(),
     );
   }

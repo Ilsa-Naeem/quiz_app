@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:quiz_app/services/auth.dart';
 import 'package:quiz_app/views/signup.dart';
@@ -68,6 +70,7 @@ class _SignInState extends State<SignIn> {
   }
   @override
   Widget build(BuildContext context) {
+    final iskeyboard=MediaQuery.of(context).viewInsets.bottom !=0;
     // SystemChrome.setSystemUIOverlayStyle(
     //     SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
@@ -86,22 +89,22 @@ class _SignInState extends State<SignIn> {
         key: _formKey,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              Spacer(),
-              Container(
-                
-                  child: SingleChildScrollView(
-                    child: Column(
+
+                    // child: SingleChildScrollView(
+                    //   reverse: true,
+                      child:Column(
+                        // mainAxisSize: MainAxisSize.max,
                       children: [
-                        ClipRRect(
-                          child: Image.network( "https://cdn-icons-png.flaticon.com/128/5677/5677910.png",
+                        if(!iskeyboard)Spacer(),
+                       ClipRRect(
+                          child: Image.network("https://img.freepik.com/free-vector/thoughtful-woman-with-laptop-looking-big-question-mark_1150-39362.jpg?w=360&t=st=1668036238~exp=1668036838~hmac=0ac9ad200f9acef2da7d77a9798c15785e894077d6c039ac21734993a7e4d623",
+                          // Image.network( "https://cdn-icons-png.flaticon.com/128/5677/5677910.png",
                               // height: maxHeight * 1,
                               fit: BoxFit.cover),
                         ),
-                        SizedBox(
-                          height: 80,
-                        ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         TextFormField(
 
                           validator:(val){
@@ -171,20 +174,23 @@ class _SignInState extends State<SignIn> {
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-
-              ),
               SizedBox(
                 height: 80,
               )
-            ],
-          ),
-        ),
+                      ],
+
+
+              ),
+                    ),
+
+
+
+          // ),
+
       ),
 
-    );
+    )
+    ;
   }
 }
 

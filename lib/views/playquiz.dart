@@ -118,18 +118,7 @@ class _QuizPlayState extends State<QuizPlay> {
           },
           child: Icon(Icons.login_outlined,color: Colors.black45,),
         ),
-        actions: [
-          PopupMenuButton(itemBuilder: (context)=>[
-            const PopupMenuItem(value:1 ,child: Text("Account")),
 
-      ],
-            onSelected: (value){
-            if(value==1){
-              // getlogOut();
-            }
-            }
-    ,
-          icon: Icon(Icons.more_vert,color: Colors.black45,),) ],
         centerTitle: true,
         backgroundColor: Colors.transparent,
         brightness: Brightness.light,
@@ -338,7 +327,7 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                     optionSelected = widget.questionModel.option3!;
                     widget.questionModel.answered = true;
                     _correct = _correct + 1;
-                    _notAttempted = _notAttempted + 1;
+                    _notAttempted = _notAttempted - 1;
                   });
                 } else {
                   setState(() {
@@ -370,7 +359,7 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                     optionSelected = widget.questionModel.option4!;
                     widget.questionModel.answered = true;
                     _correct = _correct + 1;
-                    _notAttempted = _notAttempted + 1;
+                    _notAttempted = _notAttempted - 1;
                   });
                 } else {
                   setState(() {
